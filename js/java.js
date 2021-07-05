@@ -1,4 +1,8 @@
 'use strict'
+let num=[]
+let imagname=[]
+let votechart=[]
+let showchart=[]
     Image.arr=[]
 function Image(name,path,){
     this.name=name
@@ -7,6 +11,7 @@ function Image(name,path,){
     this.vote=0
     this.show=0
     Image.arr.push(this)
+    imagname.push(this.name)
 }
 
 new Image ('bag','image/bag.jpg');
@@ -35,7 +40,7 @@ function randomfu(){
     return Math.floor(Math.random()*Image.arr.length)
 }
 // console.log(randomfu())
-
+let s1=document.getElementById('s1');
 let leftpic=document.getElementById('left');
 let midpic=document.getElementById('mid');
 let rightpic=document.getElementById('right');
@@ -51,62 +56,82 @@ function re(){
 leftnumber=randomfu();
 midnumber=randomfu();
 rightnumber=randomfu();
-
+   
+// num=[leftnumber,midnumber,rightnumber];
+console.log('1',num)
+// console.log(num[0][0])
+// num.push([leftnumber,midnumber,rightnumber])
 // console.log('before',leftnumber);
 // console.log('before',midnumber);
 // console.log('before',rightnumber);
-while(leftnumber===midnumber||rightnumber===leftnumber||rightnumber===midnumber){
-     leftnumber=randomfu()
+while(num[0]==leftnumber||num[0]==midnumber ||num[0]==rightnumber||num[1]==leftnumber||num[1]==midnumber ||num[1]==rightnumber||num[2]==leftnumber||num[2]==midnumber ||num[2]==rightnumber){
+  console.log('2',num)
+  leftnumber=randomfu()
  midnumber=randomfu()
  rightnumber=randomfu()
-}
+ console.log('2',num)
+ }
+while(leftnumber===midnumber||rightnumber===leftnumber||rightnumber===midnumber){
+  console.log('3')
+  console.log('if the same sim',leftnumber);
+  console.log('if the same sim',midnumber);
+  console.log('if the same sim',rightnumber);
+     leftnumber=randomfu();
+ midnumber=randomfu();
+ rightnumber=randomfu();
+ while(num[0]==leftnumber||num[0]==midnumber ||num[0]==rightnumber||num[1]==leftnumber||num[1]==midnumber ||num[1]==rightnumber||num[2]==leftnumber||num[2]==midnumber ||num[2]==rightnumber){
+
+  leftnumber=randomfu()
+ midnumber=randomfu()
+ rightnumber=randomfu()
+ console.log('4',)
+ 
+ console.log('if after before',leftnumber);
+ console.log('if after before',midnumber);
+ console.log('if after before',rightnumber);
+ }
+  }
 
 
-
-// console.log('after',leftnumber);
-// console.log('after',midnumber);
-// console.log('after',rightnumber);
 leftpic.src=Image.arr[leftnumber].path;
+
 midpic.src=Image.arr[midnumber].path;
 rightpic.src=Image.arr[rightnumber].path;} ;
 re();
+s1.addEventListener('click',conting);
+// leftpic.addEventListener('click',conting);
+// midpic.addEventListener('click',conting);
+// rightpic.addEventListener('click',conting);
 
-leftpic.addEventListener('click',conting);
-midpic.addEventListener('click',conting);
-rightpic.addEventListener('click',conting);
-
-function conting(){
+function conting(){num=[leftnumber,midnumber,rightnumber];
   count++
   // console.log(count)
   if(count<=max){
-
-  for(let i=0;i<Image.arr.length;i++){
-  if( Image.arr[leftnumber].name === Image.arr[i].name){
-    Image.arr[leftnumber].show++ ;;break}}
+ 
+    Image.arr[leftnumber].show++ ;
     
-    for(let i=0;i<Image.arr.length;i++){
-    if( Image.arr[midnumber].name === Image.arr[i].name){
-      Image.arr[midnumber].show++;break}}
-      
-      for(let i=0;i<Image.arr.length;i++){
-      if( Image.arr[rightnumber].name === Image.arr[i].name){
-        Image.arr[rightnumber].show++;break }}
-   
-        if(event.target.id === 'left'){
-        Image.arr[leftnumber].vote++
+      Image.arr[midnumber].show++;
 
-        ;
+        Image.arr[rightnumber].show++;
 
-      }else if(event.target.id ==='mid'){
-       Image.arr[midnumber].vote++;
-      }
-      else if(event.target.id ==='right'){
-        Image.arr[rightnumber].vote++;
-       }
+    if(event.target.id === 'left'){
+      Image.arr[leftnumber].vote++;}
+
+    else if(event.target.id ==='mid'){
+       Image.arr[midnumber].vote++;}
+    
+    else if(event.target.id ==='right'){
+        Image.arr[rightnumber].vote++;}
+    else{alert("please click exactly on the image you want")
+         count--
+         Image.arr[leftnumber].show--;
+         Image.arr[midnumber].show--;
+         Image.arr[rightnumber].show--;}
+
        re();
-}else{
-      // List();
-  }
+      }
+      
+  
 }
 
 let click=document.getElementById('click')
@@ -118,9 +143,51 @@ function List(){
     let list = document.createElement('li');
     unorder.appendChild(list);
     list.textContent = `${Image.arr[i].name} had  ${Image.arr[i].vote} vote , and was seen ${Image.arr[i].show}    time`
+  votechart.push(Image.arr[i].vote);
+  showchart.push(Image.arr[i].show);
   }
+  chart();
   leftpic.removeEventListener('click',conting);
   midpic.removeEventListener('click',conting);
   rightpic.removeEventListener('click',conting);
   click.removeEventListener('click',List)
+  
 }
+function chart(){
+let ctx = document.getElementById('myChart').getContext('2d');
+let  myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: imagname,
+        datasets: [{
+            label: '# of Votes',
+            data: votechart,
+            backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                // 'rgba(54, 162, 235, 0.2)',
+                // 'rgba(255, 206, 86, 0.2)',
+                // 'rgba(75, 192, 192, 0.2)',
+                // 'rgba(153, 102, 255, 0.2)',
+                // 'rgba(255, 159, 64, 0.2)'
+            ],
+            
+           
+        },
+        
+        {
+            label: '# of show',
+            data: showchart,
+            backgroundColor: [
+                'rgba(55, 33, 466, 1)',
+                // 'rgba(54, 162, 235, 0.2)',
+                // 'rgba(255, 206, 86, 0.2)',
+                // 'rgba(75, 192, 192, 0.2)',
+                // 'rgba(153, 102, 255, 0.2)',
+                // 'rgba(255, 159, 64, 0.2)'
+            ],
+            
+           
+        }]
+    },
+   
+});}

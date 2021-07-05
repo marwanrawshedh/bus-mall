@@ -1,7 +1,7 @@
-body{background-color: rgba(31, 31, 36, 0.774);}
+body{background-color: rgba(121, 121, 126, 0.774);}
 
 
-main{width: 85%;margin: auto; background-color: rgba(131, 131, 139, 0.514);}
+main{width: 85%;margin: auto; background-color: rgba(220, 220, 236, 0.514);}
 main section{margin-left: 60px;}
 #click{width: 20%; margin-left:40%;margin-top: 70px;background-color: rgba(44, 20, 20, 0.808);padding: 10px;color: cornsilk;font-size: smaller;text-align: center;border-radius:15px ;}
 #click:hover{transform: scale(0.8)}
